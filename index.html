@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<style>
+#container {
+  background: black;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: 5px solid black;
+  width: calc( 10px * 48 );
+  height: calc( 10px * 44 )
+}
+#out_container {
+  background: black;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: 5px solid black;
+  width: calc( 10px * 48 );
+  height: calc( 10px * 44 )
+}
+.cell {
+   /* center the cell content */
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background: white;
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  border: 2px solid black;
+}
+.black {
+    background-color: black;
+}
+.blocked {
+    background-color: #aaa !important;
+}
+</style>
+
+<h1>Image Builder v2</h1>
+<p>Based on builders by AznPwnage and Nev (@Nev_rtheless), using data from TJ09</p>
+<p>MmEeitfrlgVT</p>
+<input type="text" id="letters">
+<button id="set_letters">Select Letters</button>
+
+<div id="container"></div>
+<button id="bwd">&lt;</button>
+<button id="fwd">&gt;</button>
+<button id="save">save</button>
+<button id="render">render</button>
+<button id="render_groups">render groups</button>
+<button id="clear_groups">clear groups</button>
+<hr>
+<button id="LEFT">&lt;</button>
+<button id="RIGHT">&gt;</button>
+<button id="UP">^</button>
+<button id="DOWN">v</button>
+<div id="out_container"></div>
+</body>
+</html>
+
+<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous"></script>
+
+<script>
+    fetch('./fontBase.json').then(r => r.json()).then(data => {
+        window.baseFontData = data;
+    });
+
+    fetch('./sequences.json').then(r => r.json()).then(data => {
+        window.gifs = data;
+    });
+</script>
+
+<script>
+var background = [1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+
+var currentLetter = 0;
+// SEQ-* letters: Ji,tTdIp6fb1rMn^luyw.oEc3sme
+// NOTE: 'Q' and 'W' ignored.
+var LETTERS = ""
+
+// "Confirmed": glMV
+const LetterPositions = {
+    "M":21085,
+    "m":42244,
+    "E":35590,
+    "e":43151,
+    "i":1424,
+    "t":2118,
+    "f":17759,
+    "r":21026,
+    "l":11574,
+    "g":48,
+    "V":1893,
+    "T":6739
+}
+
+var savedFont = {}
+
+$(function() {
+    // Build out the grid cells
+    for(let i=0; i < (44*48); i++){
+        let bgClass = background[i] ? "blocked" : "pixel"
+        $("#container").append(`<div class="cell ${i} ${bgClass}"></div>`)
+    }
+
+    for(let i=0; i < (44*48); i++){
+        let bgClass = background[i] ? "blocked" : ""
+        $("#out_container").append(`<div class="cell out out${i} ${bgClass}"></div>`)
+    }
+    $(".pixel").click(function () {
+        $(this).toggleClass("black")
+    })
+    $("#fwd").click(() => {
+        currentLetter = (currentLetter+1) % LETTERS.length
+        if(LETTERS[currentLetter] in baseFontData){
+            loadLetter(LETTERS[currentLetter])
+            renderFinal()
+        } else {
+            clearLetter()
+        }
+    })
+    $("#bwd").click(() => {
+        currentLetter = (currentLetter-1 + LETTERS.length) % LETTERS.length
+        if(LETTERS[currentLetter] in baseFontData){
+            loadLetter(LETTERS[currentLetter])
+            renderFinal()
+        } else {
+            clearLetter()
+        }
+    })
+    $("#update").click(mapFinalImage)
+    $("#render").click(renderFinal)
+    $("#render_groups").click(renderCodes)
+    $("#clear_groups").click(clearCodes)
+    $("#save").click(saveLetter)
+    $("#LEFT").click(() => shiftSavedLetter(LETTERS[currentLetter], +1))
+    $("#RIGHT").click(() => shiftSavedLetter(LETTERS[currentLetter], -1))
+    $("#DOWN").click(() => moveSavedLetter(LETTERS[currentLetter], -1))
+    $("#UP").click(() => moveSavedLetter(LETTERS[currentLetter], +1))
+    $("#set_letters").click(() => {
+        LETTERS = $("#letters").val()
+        currentLetter = 0
+        loadLetter(LETTERS[currentLetter])
+        renderCodes()
+        renderFinal()
+    })
+});
+
+function loadLetter(l){
+    $(`.pixel`).removeClass("black")
+    for(let i=0; i<(44*48); i++){
+        if(baseFontData[l][i]){
+            $(`.${i}`).addClass("black")
+        }
+    }
+}
+function clearLetter(){
+    $(`.pixel`).removeClass("black")
+}
+
+function generateFramePixels(){
+    let codes = {}
+    for(let i = 0; i < (44*48); i++){
+        let code = ""
+        for(let l of LETTERS){
+            if(baseFontData[l][i]){
+                code += "1"
+            } else {
+                code += "0"
+            }
+        }
+        if(code != "0".repeat(LETTERS.length)){
+            if(!(code in codes)){
+                codes[code] = []
+            }
+            codes[code].push(i)
+        }
+    }
+    return codes
+}
+
+function mapFinalImage(){
+    let placed_gifs = {}
+    let codes = generateFramePixels()
+    // console.log(codes)
+    for(let gif in gifs){
+        let code = ""
+        for(let letter of LETTERS){
+            // console.log(letter)
+            code += gifs[gif][LetterPositions[letter]]
+        }
+        if(!(code in codes)){
+            console.log("Code not found: " + code)
+            continue
+        }
+        if(codes[code].length > 0){
+            //$(`.out${codes[code].pop()}`).addClass("black")
+            placed_gifs[gif] = {pos: codes[code].pop(), code}
+        }
+    }
+    return placed_gifs
+}
+
+function renderFinal(){
+    $(".out").removeClass("black")
+    $(".out").css("background-color","")
+    let placed_gifs = mapFinalImage()
+    let frame = LetterPositions[LETTERS[currentLetter]]
+    for(let gif in placed_gifs){
+        if(gifs[gif][frame]){
+            let index = placed_gifs[gif].pos
+            $(`.out${index}`).addClass("black")
+        }
+    }
+}
+
+const cols = ["white", "red", "green", "blue", "orange", "purple", "yellow", "aqua",
+              "Aquamarine", "Brown", "CadetBlue", "DarkSalmon", "DeepPink", "GoldenRod", "Indigo", "LightSeaGreen"]
+
+function renderCodes() {
+    // $(".out").removeClass("black")
+    $(".out").css("background-color","")
+    $(".out").css("border-color","")
+    let data = generateFramePixels()
+    for(let code in data){
+        let colour = cols[parseInt(code, 2)]
+        for(let pos of data[code]){
+            $(`.out${pos}`).css("border-color",colour)
+        }
+    }
+}
+
+function clearCodes() {
+    $(".out").css("border-color","")
+}
+
+function saveLetter(){
+    for(let i=0; i < (44*48); i++){
+        if($(`.${i}`).hasClass("black")) {
+            baseFontData[LETTERS[currentLetter]][i] = 1
+        } else {
+            baseFontData[LETTERS[currentLetter]][i] = 0
+        }
+    }
+}
+
+function shiftSavedLetter(letter, amount){
+    console.log("Shifting by " + amount.toString())
+    let list = baseFontData[letter]
+    let new_list = []
+    for(let i=0; i<list.length; i++){
+        new_list.push(list[(i+amount+48)%48 + Math.floor(i/48)*48])
+    }
+    baseFontData[letter] = new_list
+    loadLetter(letter)
+    renderCodes()
+    renderFinal()
+}
+
+function moveSavedLetter(letter, amount){
+    console.log("Shifting by " + amount.toString())
+    let list = baseFontData[letter]
+    let new_list = []
+    for(let i=0; i<list.length; i++){
+        let y = Math.floor((i)/48)
+        new_list.push(list[(i+48)%48 + ((y+amount)%44)*48])
+    }
+    baseFontData[letter] = new_list
+    loadLetter(letter)
+    renderCodes()
+    renderFinal()
+}
+
+</script>

@@ -1,0 +1,1 @@
+wget -O sequences.json https://public.dev.tjl.co/blarg/sequences.json

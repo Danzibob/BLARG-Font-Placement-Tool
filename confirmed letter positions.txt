@@ -1,0 +1,298 @@
+standard text
+
+a: 23 + 219 = nearly same (104/103)
+b: 69 + 294 = same (156)
+c: 555 + 688 = same (81)
+d: 94 + 281 = same (188)
+e: 26 + 66 = same (92)
+f: 318 + 392 = nearly same (104/105)
+g: 48 + 154 = same (152)
+h: 60 + 253 = same (201)
+i: 62 + 72 = same (68)
+j: 109 + 3611 = same (83)
+k: 36 + 122 = same (190)
+l: 271 + 351 = same (126)
+m: 155 + 292 = same (195)
+n: 21 +  24 = same (132)
+o: 86 + 160 = same (116)
+p: 258 + 358 = same (162)
+q: 8629 + 2680 = nearly same (148/146)
+r: 63 + 107 = same (79)
+s: 74 + 80 = same (83)
+t: 33 + 41 = same (79)
+u: 169 + 0312 = same (128)
+v: 577 + 669 = same (84)
+w: 188 + 67 = same (154)
+x: 159 + 199 = nearly same (113/114)
+y: 156 + 190 = same (97)
+z: 567 + 5700 = same (74)
+
+A: 871 + 1521 = same(197)
+B: 639 + 5101 = nearly same (228/225)
+C: 2250 + 5037 = same (166)
+D: 1117 + 3711 = nearly same (219/216)
+E: 240 + 2800 = same (197)
+F: 2589 + 4233 = same (163)
+G: 32352 + 34956 = same (207)
+H: 2990 + 3343 = nearly same (240/241)
+I: 20 + 285 = nearly same (116/115)
+J: 10542 + 35020 = nearly same (126/128)
+K: 33985 + 42181 = nearly same (227/224)
+L: 3370 + 3433 = same (140)
+M: 6601 + 5084 = same (301/301) (129 is 311)
+N: 2215 + 3535 = same (214)
+O: 3998 + 4605 = nearly same (212/213)
+P: 1234 + 1600 = same (172)
+Q: 44881 = Unique [no additional to compare]  (270)
+R: 1911 + 9984 = same (237)
+S: 4974 + 5087 = nearly same (166/167)
+T: 193 + 962 = same (147)
+U: 547 + 3526 = nearly same (167/164)
+V: 197 + 608 = same (170)
+W: 4110 + 5372 = nearly same (340/341)
+X: 22006 + 22039 = same (200)
+Y: 5988 + 21134 = nearly same(148/146)
+Z: 133 Unique [no additional to compare] (176)
+
+0: 991 + 11076 = nearly same (165/167)
+1: 4504 + 19225 = same (127)
+2: 990 + 4505 = nearly same (134/135)
+3: 45009 = Unique [no additional to compare] (229)
+4: None
+5: None
+6: 45010 = Unique [no additional to compare] (223)
+7: None
+8: 992 + 11077 = same (180)
+9: None
+!: None
+?: 5390 + 5496 = same (64)
+.(period): 191 + 1115 (14)
+'(apostrophe): 3002 + 4023 = nearly same (30/32)
+"(quotation): 1682 + 1733 = nearly same (65/64)
+,(comma): 137 + 1692 = same (25)
+:(colon): None
+...(ellipse): 35001 + 38189 = same (53)
+-(dash): 1734 + 1681 = nearly same (26/25)
+
+AI Text
+
+a: 36474 + 36567 = same (224)
+b: 35725 + 35914 = nearly same (250/249)
+c: 35736 + 36360 = same (160)
+d: 36121 + 36494 = nearly same (250/247)
+e: 35787 + 36111 = same (232)
+f: 36288 + 36358 = slightly same (160/165)
+g: 36115 + 36367 = slightly same (269/270)
+h: 36164 + 36009 = nearly same (211/212)
+i: 35778 + 36161 = same (161)
+j: 36538 + 49055 = nearly same (186/183)
+k: 24674 + 35699 = same (212)
+l: 35731 + 36267 = nearly same (157/158)
+m: 14534 + 14566 = nearly same (245/244)
+n: 14515 + 14731 = nearly same (187/186)
+o: 14481 + 14481 = same (208) this seems to have two potential displays based on letters around
+   14690 + 14665 = same (200) 
+p: 14580 + 14707 = same (243)
+q: 14619 + 35955 = same (249)
+r: 35728 + 14586 = nearly same (145/144)
+s: 14499 + 14584 = nearly same (200/201)
+t: 14522 + 36119 = same (178)
+u: 36250 + 20210 = nearly same (179/177)
+v: 36037 + 37441 = same (151)
+w: 14546 + 38872 = same (214)
+x: 40022 + 44489 = nearly same (161/162)
+y: 44594 + 35772 = same (191)
+z: 38591 + 38955 = nearly same (198/200)
+
+A: 14464 + 14469 = same (223)
+B: 14480 + 14506 = nearly same (297/298)
+C: 14457 + 14493 = same (167)  
+D: 35648 + 35910 = nearly same (256/254)
+E: 14463 + 20176 = same (221)
+F: 35854 + 37365 = same (190/189)
+G: 10094 + 24241 = same (220)
+H: 35639 + 35670 = nearly same (234/235)
+I: 24239 + 24602 = same (200)
+J: None
+K: 37306 = Unique [no additional to compare](235)
+L: 37281 + 37316 = nearly same (149/148)
+M: 36694 + 36795 = nearly same (268/269)
+N: 35643 + 36728 = same (291) 
+O: 36753 + 36798 = nearly same (226/228)
+P: 14496 + 14507 = nearly same (229)
+Q: None
+R: 48147 + 48229 = nearly same (279/278)
+S: 14467 + 14590 = nearly same (221/222)
+T: 14468 + 14703 = nearly same (169/168)
+U: 14471 + 35640 = nearly same (224/225)
+V: 35602 + 36788 = nearly same (192/194)
+W: 24235 + 24598 = same (281)
+X: 36956 = Unique [no additional to compare] (213)
+Y: 36799 + 37198 = nearly same (160/162)
+Z: 37231 + 44553 = nearly same (211/212)
+
+0: 48039 + 48191 = same (268)
+1: 48179 + 48216 = nearly same (210/211)
+2: 37249 + 37312 = same (240)
+3: 39981 + 40078 = nearly same(229/232)
+4: None
+5: None
+6: 39982 + 48177 = nearly same (226/223)
+7: 48235 + 14503 = same (192)
+8: 35604 + 37311 = nearly same (283/280)
+9: None
+!:
+?:
+.:
+':
+":
+,:
+::
+
+Bracket text
+
+a: 1277 + 2239 = same (103)
+b: 1256 + (156)
+c:
+d: 1282 + 2221 = same (188)
+e: 1260 + 1266 = nearly same (92/93)
+f:
+g: 1274 + (152)
+h: 1253 + 1259 (201)
+i: 2233 + (63)
+j:
+k:
+l: 1265 + (126)
+m:
+n: 1267 + 1281 = nearly same (132/133)
+o: 1257 + 2216 = nearly same (116/117)
+p:
+q:
+r: 1261 + 1278 = same (79)
+s: 2242 + 2246 = same (83)
+t: 1258 + 1268 = same (79)
+u: 1280 + (129)
+v: 2234 + (84)
+w: 2218 + (154)
+x:
+y: 1254 + 1269 = same (97)
+z:
+
+A:
+B:
+C:
+D:
+E:
+F:
+G:
+H:
+I:
+J:
+K:
+L:
+M:
+N: 2215 + (214)
+O:
+P: 1264 + (172)
+Q:
+R:
+S:
+T:
+U:
+V:
+W: 1252 + (353)
+X:
+Y:
+Z:
+
+0:
+1:
+2:
+3:
+4:
+5:
+6:
+7:
+8:
+9:
+!:
+?:
+.:
+':
+":
+,:
+::
+
+Italic text
+
+a: 
+b: 
+c:
+d: 
+e: 5436 + 5663 = nearly same (99/98)
+f:
+g: 
+h: 5435 + 5662 = same (174)
+i: 
+j:
+k:
+l: 
+m:
+n: 5962 + (133)
+o: 5433 + 5961 = same (108)
+p:
+q:
+r: 5437 + (76)
+s: 5960 +5964 = same (86)
+t: 5434 + 5661 = same (78)
+u: 
+v: 
+w: 
+x:
+y: 5664 + (95)
+z:
+
+A:
+B:
+C:
+D:
+E:
+F:
+G:
+H:
+I:
+J:
+K:
+L:
+M:
+N: 
+O:
+P: 
+Q:
+R:
+S:
+T:
+U:
+V:
+W:
+X:
+Y:
+Z:
+
+0:
+1:
+2:
+3:
+4:
+5:
+6:
+7:
+8:
+9:
+!:
+?:
+.:
+': 5963 + (35)
+":
+,:
+::

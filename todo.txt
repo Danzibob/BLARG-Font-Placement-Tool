@@ -1,0 +1,9 @@
+TODO:
+
+- CREATE IMAGES FOR ALL MISSING LETTERS AND SYMBOLS
+
+- Add metrics for how many pixels are present for a letter / letter group
+- Warnings for (large) groups with zero pixels
+- Import and export for font data
+
+- Add metric for how many pixels match the full image using all known letters
