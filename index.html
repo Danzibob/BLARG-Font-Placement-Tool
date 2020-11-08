@@ -45,6 +45,8 @@
 <p>MmEeitfrlgVT</p>
 <input type="text" id="letters">
 <button id="set_letters">Select Letters</button>
+Select File to read <input type="file" onchange="loadfile(this)">
+<pre id="data"></pre>
 
 <div id="container"></div>
 <button id="bwd">&lt;</button>
@@ -86,19 +88,20 @@ var currentLetter = 0;
 var LETTERS = ""
 
 // "Confirmed": glMV
-const LetterPositions = {
-    "M":21085,
-    "m":42244,
-    "E":35590,
-    "e":43151,
-    "i":1424,
-    "t":2118,
-    "f":17759,
-    "r":21026,
-    "l":11574,
-    "g":48,
-    "V":1893,
-    "T":6739
+
+//loading file
+function loadfile(o){
+    var fr = new FileReader();
+    fr.onload = function(e)
+    {
+        showDataFile(e,o);
+    };
+    fr.readAsText(o.files[0]);
+}
+
+function showDataFile(e,o)
+{
+    LetterPositions = JSON.parse(e.target.results);
 }
 
 var savedFont = {}
