@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-
+<!-- Ji,tTdIpfb1rMn^luyw.hoEcse -->
 <style>
 #container {
   background: black;
@@ -30,7 +30,7 @@
   box-sizing: border-box;
   width: 10px;
   height: 10px;
-  border: 2px solid black;
+  border: 1px solid black;
 }
 .black {
     background-color: black;
@@ -55,6 +55,7 @@ Select File to read <input type="file" onchange="loadfile(this)">
 <button id="render">render</button>
 <button id="render_groups">render groups</button>
 <button id="clear_groups">clear groups</button>
+<button id="export">export</button>
 <hr>
 <button id="LEFT">&lt;</button>
 <button id="RIGHT">&gt;</button>
@@ -72,11 +73,11 @@ Select File to read <input type="file" onchange="loadfile(this)">
 <script>
 var baseFontData
 var gifs
-    fetch('./fontBase.json').then(r => r.json()).then(data => {
+    fetch('./console.json').then(r => r.json()).then(data => {
         baseFontData = data;
     });
 
-    fetch('./sequences.json').then(r => r.json()).then(data => {
+    fetch('https://public.dev.tjl.co/blarg/sequences.json').then(r => r.json()).then(data => {
         gifs = data;
     });
 </script>
@@ -127,6 +128,7 @@ $(function() {
         if(LETTERS[currentLetter] in baseFontData){
             loadLetter(LETTERS[currentLetter])
             renderFinal()
+            renderCodes()
         } else {
             clearLetter()
         }
@@ -136,12 +138,14 @@ $(function() {
         if(LETTERS[currentLetter] in baseFontData){
             loadLetter(LETTERS[currentLetter])
             renderFinal()
+            renderCodes()
         } else {
             clearLetter()
         }
     })
     $("#update").click(mapFinalImage)
     $("#render").click(renderFinal)
+    $("#export").click(exportGifPos)
     $("#render_groups").click(renderCodes)
     $("#clear_groups").click(clearCodes)
     $("#save").click(saveLetter)
@@ -161,6 +165,8 @@ $(function() {
 function loadLetter(l){
     $(`.pixel`).removeClass("black")
     for(let i=0; i<(44*48); i++){
+        // console.log(baseFontData)
+        // console.log(l, i)
         if(baseFontData[l][i]){
             $(`.${i}`).addClass("black")
         }
@@ -188,23 +194,27 @@ function generateFramePixels(){
             codes[code].push(i)
         }
     }
+    console.log(codes)
     return codes
 }
 
 function mapFinalImage(){
     let placed_gifs = {}
     let codes = generateFramePixels()
-    // console.log(codes)
+    console.log(codes)
     for(let gif in gifs){
         let code = ""
         for(let letter of LETTERS){
             // console.log(letter)
             code += gifs[gif][LetterPositions[letter]]
         }
+        console.log(code)
         if(!(code in codes)){
             console.log("Code not found: " + code)
             continue
         }
+
+
         if(codes[code].length > 0){
             //$(`.out${codes[code].pop()}`).addClass("black")
             placed_gifs[gif] = {pos: codes[code].pop(), code}
@@ -220,10 +230,27 @@ function renderFinal(){
     let frame = LetterPositions[LETTERS[currentLetter]]
     for(let gif in placed_gifs){
         if(gifs[gif][frame]){
-            let index = placed_gifs[gif].pos
+            $(`.out${placed_gifs[gif].pos}`).addClass("black")
+        }
+    }
+}
+
+function exportGifPos(){
+    let nevExport = {}
+    $(".out").removeClass("black")
+    $(".out").css("background-color","")
+    let placed_gifs = mapFinalImage()
+    let frame = LetterPositions[LETTERS[currentLetter]]
+    for(let gif in placed_gifs){
+        let index = placed_gifs[gif].pos
+        let x = (index%48)
+        let y = Math.floor((index-x)/48)
+        nevExport[gif] = {"x":x*24,"y":y*24 + 50}
+        if(gifs[gif][frame]){
             $(`.out${index}`).addClass("black")
         }
     }
+    console.save(nevExport)
 }
 
 const cols = ["white", "red", "green", "blue", "orange", "purple", "yellow", "aqua",
@@ -235,7 +262,12 @@ function renderCodes() {
     $(".out").css("border-color","")
     let data = generateFramePixels()
     for(let code in data){
-        let colour = cols[parseInt(code, 2)]
+        let color
+        if(code.length > 4){
+            colour = code[currentLetter] == "1" ? "red" : "blue"
+        } else {
+            colour = cols[parseInt(code, 2)]
+        }
         for(let pos of data[code]){
             $(`.out${pos}`).css("border-color",colour)
         }
@@ -283,4 +315,34 @@ function moveSavedLetter(letter, amount){
     renderFinal()
 }
 
+function updateMetrics(codes){
+    let keys = Object.keys(code)
+}
+
+function tableRow(){
+
+}
+
+console.save = function(data, filename){
+    if(!data) {
+        console.error('Console.save: No data')
+        return;
+    }
+
+    if(!filename) filename = 'console.json'
+
+    if(typeof data === "object"){
+        data = JSON.stringify(data, undefined, 4)
+    }
+
+    var blob = new Blob([data], {type: 'text/json'}),
+        e    = document.createEvent('MouseEvents'),
+        a    = document.createElement('a')
+
+    a.download = filename
+    a.href = window.URL.createObjectURL(blob)
+    a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+    a.dispatchEvent(e)
+}
 </script>

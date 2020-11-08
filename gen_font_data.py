@@ -13,7 +13,8 @@ def XY2I(x,y):
 # Create image templates for each file
 for filename in os.listdir(LETTER_FOLDER):
     if filename == "_tjImage.png": continue
-    name = filename.split(".")[0]
+    name = ".".join(filename.split(".")[:-1])
+    print(name)
     cap, letter = name.split("_")
     if cap:
         letter = letter.upper()
@@ -24,7 +25,9 @@ for filename in os.listdir(LETTER_FOLDER):
     for x in range(48):
         for y in range(44):
             px = im.getpixel((x,y))
-            if px == (255,255,255,255) or px == (210,175,111,255) or px == 1:
+            # print(px)
+            #if px == (255,255,255,255) or px == (210,175,111,255) or px == (255,255,255) or px == 1:
+            if px == (0,0,0) or px == (0,0,0,255):
                 pixels[XY2I(x,y)] = 1
                 # Fuzzify 1 px in each direction:
     
