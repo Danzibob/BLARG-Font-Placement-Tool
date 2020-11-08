@@ -70,12 +70,14 @@ Select File to read <input type="file" onchange="loadfile(this)">
   crossorigin="anonymous"></script>
 
 <script>
+var baseFontData
+var gifs
     fetch('./fontBase.json').then(r => r.json()).then(data => {
-        window.baseFontData = data;
+        baseFontData = data;
     });
 
     fetch('./sequences.json').then(r => r.json()).then(data => {
-        window.gifs = data;
+        gifs = data;
     });
 </script>
 
@@ -101,7 +103,7 @@ function loadfile(o){
 
 function showDataFile(e,o)
 {
-    LetterPositions = JSON.parse(e.target.results);
+    LetterPositions = JSON.parse(e.target.result);
 }
 
 var savedFont = {}
